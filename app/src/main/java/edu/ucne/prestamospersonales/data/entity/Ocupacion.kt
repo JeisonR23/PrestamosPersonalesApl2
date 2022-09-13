@@ -9,5 +9,5 @@ data class Ocupacion(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val descripcion: String,
-    val salario: Double
+    val salario: String
 )

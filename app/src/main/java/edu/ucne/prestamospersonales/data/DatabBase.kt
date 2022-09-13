@@ -9,7 +9,7 @@ import edu.ucne.prestamospersonales.data.entity.Ocupacion
 
 @Database(
     entities = [Ocupacion::class],
-    version = 2,
+    version = 4,
     exportSchema = false
 )
 abstract class DatabBase:RoomDatabase() {
@@ -21,18 +21,20 @@ abstract class DatabBase:RoomDatabase() {
         @Volatile
         private var INSTANCE: DatabBase? = null
 
-        fun getInstance(context: Context): DatabBase {
+        fun getInstance(context: Context?): DatabBase? {
             synchronized(this) {
                 var instance = INSTANCE
 
                 if (instance == null) {
-                    instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        DatabBase::class.java,
-                        "Prestamos.bd"
-                    )
-                        .fallbackToDestructiveMigration()
-                        .build()
+                    if (context != null) {
+                        instance = Room.databaseBuilder(
+                            context.applicationContext,
+                            DatabBase::class.java,
+                            "Prestamos.bd"
+                        )
+                            .fallbackToDestructiveMigration()
+                            .build()
+                    }
                     INSTANCE = instance
                 }
                 return instance
