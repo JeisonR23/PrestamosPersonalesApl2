@@ -36,7 +36,6 @@ fun personaScreen(
     IsErrorDireccion: Boolean,
     IsErrorEmail: Boolean,
     IsErrorFechaNa: Boolean,
-
     IsMsNombre: String,
     IsMsTelefono: String,
     IsMsCelular: String,
@@ -139,17 +138,16 @@ fun personaScreen(
         Spacer(modifier = Modifier.height(10.dp)) //Spacer between Textfield
         Box() {
 
-
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(), //TextField Salario
-                label = { Text(text = "Dirreccion") },
+                label = { Text(text = "Direccion") },
                 value = Direccion,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 onValueChange = { value -> Direccion = value }
             )
             if (IsErrorTelefono == true) {
 
-                Text(text = Direccion)
+                Text(text = IsMsDireccion)
             }
         }
         Spacer(modifier = Modifier.height(10.dp)) //Spacer between Textfield
@@ -169,82 +167,44 @@ fun personaScreen(
                 Text(text = IsMsrFechaNa)
             }
         }
+            Spacer(modifier = Modifier.height(30.dp))
+            Button(
+                onClick = {
+                    scope.launch {
+                        prestamosDb?.personaDao?.insert(
+                            Persona(
+                                nombre = Nombre,
+                                telefono = Telefono,
+                                celular = Celular,
+                                email = Email,
+                                direccion = Direccion,
+                                fechaNacimiento = FechaNacimiento,
+                                ocupacionId = 1
+                            )
+                        )
+                        showDialog.value = false
 
-        Spacer(modifier = Modifier.height(30.dp))
-
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .wrapContentSize(Alignment.TopStart)) {
-            Text(
-                items[selectedIndex],
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable(onClick = { expanded = true })
-                    .background(
-                        Color.White
-                    )
-            )
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(
-                        Color.Transparent
-                    )
-            ) {
-                items.forEachIndexed { index, s ->
-                    DropdownMenuItem(onClick = {
-                        selectedIndex = index
-                        expanded = false
-                    }) {
-                        val disabledText = if (s == disabledValue) {
-                            " (Disabled)"
-                        } else {
-                            ""
-                        }
-                        Text(text = s + disabledText)
                     }
                 }
+            ) {
+                Text(text = "Agregar")
+
             }
         }
-        Button(
-            onClick = {
-                scope.launch {
-                    prestamosDb?.personaDao?.insert(
-                        Persona(
-                            nombre = Nombre,
-                            telefono = Telefono,
-                            celular = Celular,
-                            email = Email,
-                            direccion = Direccion,
-                            fechaNacimiento = FechaNacimiento,
-                            ocupacionId = 1
-                        )
-                    )
-                    showDialog.value = false
+    }
 
-                }
-            }
-        ) {
-            Text(text = "Agregar")
 
+    fun isNumeric(aux: String): Boolean {
+        return try {
+            aux.toDouble()
+            true
+        } catch (e: NumberFormatException) {
+            false
         }
     }
-}
 
 
-fun isNumeric(aux: String): Boolean {
-    return try {
-        aux.toDouble()
-        true
-    } catch (e: NumberFormatException) {
-        false
-    }
-}
-
-@Composable
-fun validacion(
+/*fun validacion(
     Nombre: String, Telefono: String, Celular: String,
     Email: String, Direccion: String
 ): Boolean {
@@ -335,4 +295,5 @@ fun validacion(
     var aux =
         (isErrorNombres && isErrorTelefono && isErrorCelular && isErrorEmail && isErrorDireccion)
     return aux
-}
+}}*/
+

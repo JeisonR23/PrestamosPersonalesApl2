@@ -30,7 +30,6 @@ import edu.ucne.prestamospersonales.ui.theme.PrestamosPersonalesTheme
 import kotlinx.coroutines.launch
 import edu.ucne.prestamospersonales.ui.ocupacion.ocupacionScreen
 import edu.ucne.prestamospersonales.ui.persona.personaScreen
-import edu.ucne.prestamospersonales.ui.persona.validacion
 import edu.ucne.prestamospersonales.ui.principal
 
 public val showDialog = mutableStateOf(false)
@@ -41,7 +40,21 @@ class MainActivity : ComponentActivity() {
         DatabBase.getInstance(this.applicationContext)
         setContent {
             PrestamosPersonalesTheme {
-                validacion(Nombre = "", Telefono = "", Celular = "", Email = "", Direccion = "")             // A surface container using the 'background' color from the theme
+                personaScreen(
+                    IsErrorNombre = true,
+                    IsErrorTelefono =true ,
+                    IsErrorCelular = true,
+                    IsErrorDireccion = true,
+                    IsErrorEmail = true,
+                    IsErrorFechaNa = true,
+                    IsMsNombre = "",
+                    IsMsTelefono = "",
+                    IsMsCelular = "",
+                    IsMsDireccion ="" ,
+                    IsMsEmail = "",
+                    IsMsrFechaNa =""
+                )
+                        // A surface container using the 'background' color from the theme
                 val scope = rememberCoroutineScope()
                 if (showDialog.value) {
                     ocupacionScreen()
