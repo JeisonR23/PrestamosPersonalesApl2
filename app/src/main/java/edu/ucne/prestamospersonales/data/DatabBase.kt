@@ -5,16 +5,19 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import edu.ucne.prestamospersonales.data.dao.OcupacionDao
+import edu.ucne.prestamospersonales.data.dao.PersonaDao
 import edu.ucne.prestamospersonales.data.entity.Ocupacion
+import edu.ucne.prestamospersonales.data.entity.Persona
 
 @Database(
-    entities = [Ocupacion::class],
-    version = 4,
+    entities = [Ocupacion::class, Persona::class],
+    version = 6,
     exportSchema = false
 )
 abstract class DatabBase:RoomDatabase() {
 
     abstract val  ocupacionDao: OcupacionDao
+    abstract  val personaDao: PersonaDao
 
     companion object {
 

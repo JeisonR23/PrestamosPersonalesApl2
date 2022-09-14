@@ -19,7 +19,7 @@ import edu.ucne.prestamospersonales.data.DatabBase
 import edu.ucne.prestamospersonales.data.entity.Ocupacion
 import kotlinx.coroutines.launch
 
-
+public val showDialog = mutableStateOf(false)
 private val ColumnScope.applicationContext: Context?
     get() {
         return null
@@ -51,7 +51,7 @@ fun ocupacionScreen(
             modifier = Modifier.fillMaxWidth(), //TextField Descricion
             label = { Text(text = "Descripcion") },
             value = Descripcion,
-            onValueChange = { value -> Descripcion = value}
+            onValueChange = { value -> Descripcion = value }
         )
         Spacer(modifier = Modifier.height(10.dp)) //Spacer between Textfield
         OutlinedTextField(
@@ -59,7 +59,7 @@ fun ocupacionScreen(
             label = { Text(text = "Salario") },
             value = Salario,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            onValueChange = { value -> Salario = value}
+            onValueChange = { value -> Salario = value }
         )
         Button(
             onClick = {
@@ -71,6 +71,7 @@ fun ocupacionScreen(
                         )
 
                     )
+                    showDialog.value = false
                 }
             }
         ) {
@@ -79,4 +80,5 @@ fun ocupacionScreen(
         }
     }
 }
+
 
